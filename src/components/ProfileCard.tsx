@@ -6,7 +6,7 @@ const THEMA = "#0008ff";
 const ProfileCard = () => {
   return (
     <div className="w-full h-screen">
-      <div className="absolute top-1/3 left-1/2 w-2/5 h-2/5 min-w-[360px] min-h-[240px] transform -translate-x-1/2 -translate-y-1/3">
+      <div className="absolute top-1/3 left-1/2 w-[54.6vw] h-[33vw] min-w-[331.6px] min-h-[198px] transform -translate-x-1/2 -translate-y-1/3">
         <motion.div
           className=" w-full h-full  flex p-8 bg-white shadow-lg "
           initial={{ opacity: 0, y: 160 }}

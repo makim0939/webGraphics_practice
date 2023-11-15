@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { myAnimationProps } from "@/animationProps";
-const Header = () => {
-  const [page, setPage] = useState("home");
+import Link from "next/link";
+const Header = ({ page }: { page: "home" | "about" | "contact" }) => {
   return (
     <nav className="fixed w-full">
       <ul className="p-3 text-2xl  md:text-3xl 2xl:text-4xl   font-extralight flex justify-around z-10">
-        <li className="w-24 md:w-32 xl:w-40" onClick={() => setPage("home")}>
+        <li className="w-24 md:w-32 xl:w-40">
           <motion.h3
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
@@ -17,8 +17,9 @@ const Header = () => {
             }}
             className="w-full text-center"
           >
-            Home
+            <Link href={"/"}>Home</Link>
           </motion.h3>
+
           {page === "home" && (
             <motion.div
               layoutId="underline"
@@ -27,7 +28,7 @@ const Header = () => {
             ></motion.div>
           )}
         </li>
-        <li className="w-24 md:w-32 xl:w-40" onClick={() => setPage("about")}>
+        <li className="w-24 md:w-32 xl:w-40">
           <motion.h3
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
@@ -38,7 +39,7 @@ const Header = () => {
             }}
             className="text-center"
           >
-            About
+            <Link href={"/about"}> About</Link>
           </motion.h3>
           {page === "about" && (
             <motion.div
@@ -48,7 +49,7 @@ const Header = () => {
             ></motion.div>
           )}
         </li>
-        <li className="w-24 md:w-32 xl:w-40" onClick={() => setPage("contact")}>
+        <li className="w-24 md:w-32 xl:w-40">
           <motion.h3
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,8 +60,9 @@ const Header = () => {
             }}
             className="text-center"
           >
-            Contact
+            <Link href={"/contact"}>Contact </Link>
           </motion.h3>
+
           {page === "contact" && (
             <motion.div
               layoutId="underline"

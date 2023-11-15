@@ -16,7 +16,7 @@ const grid = new PIXI.Graphics();
 const blurFilter = new PIXI.BlurFilter();
 grid.filters = [blurFilter];
 
-const Grid = () => {
+const Grid = ({ page }: { page: "home" | "about" | "contact" }) => {
   const [animation, setAnimation] = React.useState("initial");
   const gridRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -46,7 +46,7 @@ const Grid = () => {
         }
       }
     };
-    const gridInitial = (delta: number) => {
+    const gridEnterHome = (delta: number) => {
       count += (INITIAL_MOVE_DIST - count) * INITIAL_MOVE_SPEED;
       grid.clear();
       for (
@@ -66,13 +66,41 @@ const Grid = () => {
         }
       }
       if (INITIAL_MOVE_DIST - count <= 0.1) {
-        app.ticker.remove(gridInitial);
+        app.ticker.remove(gridEnterHome);
         setAnimation("default");
       }
     };
+
+    const gridEnterAbout = (delta: number) => {
+      count += (INITIAL_MOVE_DIST - count) * INITIAL_MOVE_SPEED;
+      grid.clear();
+      for (
+        let i = GRID_DEFAULT_POS;
+        i - GRID_DEFAULT_POS < width;
+        i += DOT_SPACING
+      ) {
+        for (
+          let j = GRID_DEFAULT_POS;
+          j - GRID_DEFAULT_POS < height;
+          j += DOT_SPACING
+        ) {
+          grid.beginFill(DOT_COLOR, 1);
+          grid.drawCircle(i - (count % DOT_SPACING), j, DOT_SIZE);
+          grid.endFill();
+          blurFilter.blur = (DOT_SPACING * 16 - count) * BLUER_COEFFICIENT;
+        }
+      }
+      if (INITIAL_MOVE_DIST - count <= 0.1) {
+        app.ticker.remove(gridEnterHome);
+        setAnimation("default");
+      }
+    };
+
     count = 0;
-    if (animation === "initial") app.ticker.add(gridInitial);
-    if (animation === "default") app.ticker.add(gridDefault);
+    if (animation === "initial") {
+      if (page === "home") app.ticker.add(gridEnterHome);
+      if (page === "about") app.ticker.add(gridEnterAbout);
+    } else if (animation === "default") app.ticker.add(gridDefault);
 
     const onResize = () => {
       app.renderer.resize(window.innerWidth, window.innerHeight);
