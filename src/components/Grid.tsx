@@ -70,10 +70,18 @@ const Grid = () => {
         setAnimation("default");
       }
     };
-
     count = 0;
     if (animation === "initial") app.ticker.add(gridInitial);
     if (animation === "default") app.ticker.add(gridDefault);
+
+    const onResize = () => {
+      app.renderer.resize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, [animation]);
 
   return <div ref={gridRef} className="fixed top-0 z-[-1]"></div>;

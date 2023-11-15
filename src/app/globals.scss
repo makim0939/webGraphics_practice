@@ -4,4 +4,8 @@
 $text-color: "#252528";
 :root {
   color: $text-color;
+  height: 100%;
+  body {
+    height: 100%;
+  }
 }
